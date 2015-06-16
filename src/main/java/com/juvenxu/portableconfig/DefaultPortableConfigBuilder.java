@@ -1,17 +1,20 @@
 package com.juvenxu.portableconfig;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import com.juvenxu.portableconfig.model.ConfigFile;
 import com.juvenxu.portableconfig.model.PortableConfig;
 import com.juvenxu.portableconfig.model.Replace;
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.StringUtils;
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author juven
@@ -48,13 +51,20 @@ public class DefaultPortableConfigBuilder implements PortableConfigBuilder
 
         for (Element replaceElement : configFileElement.getChildren("replace"))
         {
+          boolean addNoExist = false;
+          Attribute addNoExistEle = replaceElement.getAttribute("addNoExist");
+          if (addNoExistEle != null)
+          {
+            addNoExist = BooleanUtils.toBoolean(ObjectUtils.toString(addNoExistEle.getValue()));
+          }
+
           if (replaceElement.getAttribute("key") != null)
           {
-            configFile.addReplace(new Replace(replaceElement.getAttribute("key").getValue(), null, replaceElement.getText()));
+            configFile.addReplace(new Replace(replaceElement.getAttribute("key").getValue(), null, replaceElement.getText(), addNoExist));
           }
           else if (replaceElement.getAttribute("xpath") != null)
           {
-            configFile.addReplace(new Replace(null, replaceElement.getAttribute("xpath").getValue(), replaceElement.getText()));
+            configFile.addReplace(new Replace(null, replaceElement.getAttribute("xpath").getValue(), replaceElement.getText(), addNoExist));
           }
         }
 

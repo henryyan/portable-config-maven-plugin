@@ -11,11 +11,22 @@ public class Replace
 
   private String value;
 
+  private boolean addNoExist = true;
+
   public Replace(String key, String xpath, String value)
   {
     this.key = key;
     this.xpath = xpath;
     this.value = value;
+    addNoExist = true;
+  }
+
+  public Replace(String key, String xpath, String value, boolean addNoExist)
+  {
+    this.key = key;
+    this.xpath = xpath;
+    this.value = value;
+    this.addNoExist = addNoExist;
   }
 
   public String getKey()
@@ -36,6 +47,14 @@ public class Replace
   public String getXpath()
   {
     return xpath;
+  }
+
+  public boolean isAddNoExist() {
+    return addNoExist;
+  }
+
+  public void setAddNoExist(boolean addNoExist) {
+    this.addNoExist = addNoExist;
   }
 
   @Override
