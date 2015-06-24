@@ -77,6 +77,7 @@ public abstract class LineBasedContentFilter extends AbstractLogEnabled implemen
         getLogger().info("Add new property: " + key);
         bufferedWriter.write(filterLine);
         bufferedWriter.newLine();
+        addCount++;
       }
     }
 
