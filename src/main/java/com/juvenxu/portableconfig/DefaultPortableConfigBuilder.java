@@ -51,7 +51,7 @@ public class DefaultPortableConfigBuilder implements PortableConfigBuilder
 
         for (Element replaceElement : configFileElement.getChildren("replace"))
         {
-          boolean addNoExist = false;
+          boolean addNoExist = true;
           Attribute addNoExistEle = replaceElement.getAttribute("addNoExist");
           if (addNoExistEle != null)
           {
